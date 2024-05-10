@@ -1,5 +1,0 @@
-{
-    "scripts":{
-        "unit-test":"dotnet test --logger \"console;verbosity=detail\""
-    }
-}
