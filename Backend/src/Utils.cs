@@ -1,10 +1,46 @@
 namespace WebApp;
 public static class Utils
 {
-    /*public static int SumInts(int a, int b)
+    // Read all mock users from file
+    private static readonly Arr mockUsers = JSON.Parse(
+        File.ReadAllText(FilePath("json", "mock-users.json"))
+    );
+
+    // Read all bad words from file and sort from longest to shortest
+    // if we didn't sort we would often get "---ing" instead of "---" etc.
+    // (Comment out the sort - run the unit tests and see for yourself...)
+    private static readonly Arr badWords = ((Arr)JSON.Parse(
+        File.ReadAllText(FilePath("json", "bad-words.json"))
+    )).Sort((a, b) => ((string)b).Length - ((string)a).Length);
+
+    public static bool IsPasswordGoodEnough(string password)
     {
-        return a + b + 1;
-    }*/
+        return password.Length >= 8
+            && password.Any(Char.IsDigit)
+            && password.Any(Char.IsLower)
+            && password.Any(Char.IsUpper)
+            && password.Any(x => !Char.IsLetterOrDigit(x));
+    }
+
+    public static bool IsPasswordGoodEnoughRegexVersion(string password)
+    {
+        // See: https://dev.to/rasaf_ibrahim/write-regex-password-validation-like-a-pro-5175
+        var pattern = @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$";
+        return Regex.IsMatch(password, pattern);
+    }
+
+    public static string RemoveBadWords(string comment, string replaceWith = "---")
+    {
+        comment = " " + comment;
+        replaceWith = " " + replaceWith + "$1";
+        badWords.ForEach(bad =>
+        {
+            var pattern = @$" {bad}([\.\!\?\:\; ])";
+            comment = Regex.Replace(
+                comment, pattern, replaceWith, RegexOptions.IgnoreCase);
+        });
+        return comment[1..];
+    }
 
     public static Arr CreateMockUsers()
     {
