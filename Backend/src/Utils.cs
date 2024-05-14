@@ -29,13 +29,13 @@ public static class Utils
         return Regex.IsMatch(password, pattern);
     }
 
-    public static string RemoveBadWords(string comment, string replaceWith = "---")
+    public static string RemoveBadWords(string comment, string replaceWith = "***")
     {
         comment = " " + comment;
         replaceWith = " " + replaceWith + "$1";
         badWords.ForEach(bad =>
         {
-            var pattern = @$" {bad}([\.\!\?\:\; ])";
+            var pattern = @$" {bad}([\,\.\!\?\:\; ])";
             comment = Regex.Replace(
                 comment, pattern, replaceWith, RegexOptions.IgnoreCase);
         });
