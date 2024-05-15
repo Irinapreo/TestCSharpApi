@@ -29,7 +29,7 @@ public static class Utils
         return Regex.IsMatch(password, pattern);
     }
 
-    public static string RemoveBadWords(string comment, string replaceWith = "***")
+    public static string RemoveBadWords(string comment, string replaceWith = "---")
     {
         comment = " " + comment;
         replaceWith = " " + replaceWith + "$1";
@@ -66,4 +66,58 @@ public static class Utils
         }
         return successFullyWrittenUsers;
     }
+
+    public static Arr RemoveMockUsers()
+    {
+        //stores user that are removed from database
+        Arr removedUsers = Arr();
+        foreach (var user in mockUsers)
+        {
+            // Remove user from database
+            var result = SQLQueryOne(
+                "DELETE FROM users WHERE email = $email",
+                Obj(new { email = user.email })
+            );
+            // If no error, add user to the removedUsers array
+            if (!result.HasKey("error"))
+            {
+                // Add user without password to removedUsers array
+                var userWithoutPassword = Obj(user);
+                userWithoutPassword.Delete("password");
+                removedUsers.Push(userWithoutPassword);
+            }
+        }
+        return removedUsers;
+    }
+
+    public static Obj CountDomainsFromUserEmails()
+    {
+        // Retrieve all users' emails from the database
+        Arr userEmails = SQLQuery("SELECT email FROM users");
+
+        // Initialize an empty object to store domain counts
+        Obj domainCounts = Obj();
+
+        // Iterate through each user's email
+        foreach (var userEmail in userEmails)
+        {
+            // Extract domain from email
+            string email = userEmail.email;
+            string domain = email.Substring(email.IndexOf('@') + 1);
+
+            // Increment count for the domain or set it to 1 if it's the first occurrence
+            if (domainCounts.HasKey(domain))
+            {
+                domainCounts[domain] = (int)domainCounts[domain] + 1;
+            }
+            else
+            {
+                domainCounts[domain] = 1;
+            }
+        }
+
+        // Return the object containing domain counts
+        return domainCounts;
+    }
+
 }
