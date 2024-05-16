@@ -1,10 +1,10 @@
-name: Run Unit Tests
+name: .NET Core Desktop
 
 on:
   push:
-    branches: [ "feature-unit-testing" ]
+    branches: [ "feature-2024-05-16" ]
   pull_request:
-    branches: [ "feature-unit-testing" ]
+    branches: [ "feature-2024-05-16" ]
 
 jobs:
 
@@ -15,11 +15,11 @@ jobs:
         configuration: [Debug]
 
     runs-on: windows-latest  
-
+                            
     env:
       Solution_Name: Backend.sln
       Test_Project_Path: Backend
-
+  
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -39,3 +39,16 @@ jobs:
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test --logger "console;verbosity=detailed"
+    
+    # Start backend non-blocking
+    - name: Start the backend
+      shell: bash
+      run: cd Backend && nohup dotnet run &
+
+    # Run the endpoint tests
+    - name: Run the endpoint tests
+      shell: bash
+      run: cd endpoint-tests && npm test
+
+
+    
