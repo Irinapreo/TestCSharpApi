@@ -7,8 +7,9 @@ Feature: As a user I want all products should be presented with their correct de
     Then the product <"productName"> should be shown with the price <"description">
 
     Examples: 
-    | category    | productName       | description
-    | Alla        | Basic Tomatsås    | 10
-    | Alla        | Mjöliga makaroner | 10
-    | Prisvänligt | Basic Tomatsås    | 15
-    | Prisvänligt | Mjöliga makaroner | 15
+    | category    | productName | description
+    | Alla        | Saturnus    | 25
+    | Planeter    | Saturnus    | 25
+    | Stjärnor    | Solen       | 600
+    | Galaxer     | Vintergatan | 700
+

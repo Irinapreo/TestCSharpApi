@@ -6,10 +6,8 @@ Feature: As user I want that all products are displayed when you select "All" in
     Then I should see the product "<product>"
 
     Examples:
-      | category    | product           |
-      | Prisvänligt | Basic tomatsås    |
-      | Prisvänligt | Mjöliga makaroner |
-      | Vardag      | Potatis           |
-      | Vardag      | Gul lök           |
-      | Lyx         | Champagne         |
-      | Lyx         | Rysk kaviar       |
+    | category    | productName | description
+    | Alla        | Saturnus    | 25
+    | Planeter    | Saturnus    | 25
+    | Stjärnor    | Solen       | 600
+    | Galaxer     | Vintergatan | 700

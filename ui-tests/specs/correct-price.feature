@@ -8,7 +8,6 @@ Feature: As a user I want all products should be presented with their correct pr
 
     Examples: 
     | category    | productName       | price
-    | Alla        | Basic Tomatsås    | 10
-    | Alla        | Mjöliga makaroner | 10
-    | Prisvänligt | Basic Tomatsås    | 15
-    | Prisvänligt | Mjöliga makaroner | 15
+    | Alla        | Saturnus          | 25
+    | Alla        | Vintergatan       | 700
+    | Stjärnor    | Solen             | 600
