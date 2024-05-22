@@ -2,6 +2,6 @@ Feature: As user I want to be able to see the correct products listed when I hav
 
   Scenario: Check that the "Prisvänligt"-category shows the right products.
     Given that I am on the product page
-    When I choose the category "Prisvänligt"
-    Then I should see the product "Basic tomatsås"
+    When I choose the category "Stjärnor"
+    Then I should see the product "Solen"
     And I should see the product "Mjöliga makaroner"

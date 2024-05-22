@@ -6,13 +6,10 @@ Feature: As user I want to be able to see the correct products listed when I hav
     Then I should see the product "<product>"
 
     Examples:
-      | category    | product           |
-      | Prisvänligt | Basic tomatsås    |
-      | Prisvänligt | Mjöliga makaroner |
-      | Vardag      | Potatis           |
-      | Vardag      | Gul lök           |
-      | Lyx         | Champagne         |
-      | Lyx         | Rysk kaviar       |
+      | category    | product     |
+      | Planeter    | Saturnus    |
+      | Stjärnor    | Solen       |
+      | Galaxer     | Vintergatan |
 
   Scenario Outline: Check that the category <category> does not show the product <product>.
     Given that I am on the product page
