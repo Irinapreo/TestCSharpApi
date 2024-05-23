@@ -2,9 +2,9 @@ name: .NET Core Desktop
 
 on:
   push:
-    branches: [ "xfeature-endpoint" ]
+    branches: [ "feature-2024-05-20" ]
   pull_request:
-    branches: [ "xfeature-endpoint" ]
+    branches: [ "feature-2024-05-20" ]
 
 jobs:
 

@@ -1,14 +1,10 @@
 namespace WebApp;
 public static class Utils
 {
-    // Read all mock users from file
     private static readonly Arr mockUsers = JSON.Parse(
         File.ReadAllText(FilePath("json", "mock-users.json"))
     );
 
-    // Read all bad words from file and sort from longest to shortest
-    // if we didn't sort we would often get "---ing" instead of "---" etc.
-    // (Comment out the sort - run the unit tests and see for yourself...)
     private static readonly Arr badWords = ((Arr)JSON.Parse(
         File.ReadAllText(FilePath("json", "bad-words.json"))
     )).Sort((a, b) => ((string)b).Length - ((string)a).Length);
@@ -44,32 +40,23 @@ public static class Utils
 
     public static Arr CreateMockUsers()
     {
-        // Read all mock users from the JSON file
         var read = File.ReadAllText(FilePath("json", "mock-users.json"));
-        //parse file
         Arr mockUsers = JSON.Parse(read);
-        //new arr 
         Arr successFullyWrittenUsers = Arr();
         
         foreach (var user in mockUsers)
         {
-            //give each user a password
             user.password = "12345678";
-            //insert each user from json file to db
             var result = SQLQueryOne(
                 @"INSERT INTO users(firstName,lastName,email,password)
                 VALUES($firstName, $lastName, $email, $password)
             ", user);
-            // If we get an error from the DB then we haven't added
-            // the mock users, if not we have to add to the successful list
             if (!result.HasKey("error"))
             {
-                // The specification says return the user list without password
                 user.Delete("password");
                 successFullyWrittenUsers.Push(user);
             }
         }
-        //return users that have been added
         return successFullyWrittenUsers;
     }
 
@@ -125,5 +112,4 @@ public static class Utils
         // Return the object containing domain counts
         return domainCounts;
     }
-
 }
