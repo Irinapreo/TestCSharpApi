@@ -2,9 +2,9 @@ name: .NET Core Desktop
 
 on:
   push:
-    branches: [ "feature-endpoint" ]
+    branches: [ "fffeature-endpoint" ]
   pull_request:
-    branches: [ "feature-endpoint" ]
+    branches: [ "fffeature-endpoint" ]
 
 jobs:
 
