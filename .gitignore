@@ -4,5 +4,4 @@ obj
 Backend/_db.sqlite3
 Dyndata
 
-# Ignore node_modules since we are using node/npm for our endpoint test
 node_modules

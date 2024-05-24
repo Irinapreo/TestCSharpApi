@@ -1,33 +1,20 @@
 namespace WebApp;
 public class UtilsTest(Xlog Console)
 {
-    // Read all mock users from file
     private static readonly Arr mockUsers = JSON.Parse(
         File.ReadAllText(FilePath("json", "mock-users.json"))
     );
 
     [Theory]
-    [InlineData("abC9#fgh", true)]  // ok
-    [InlineData("stU5/xyz", true)]  // ok too
-    [InlineData("abC9#fg", false)]  // too short
-    [InlineData("abCd#fgh", false)] // no digit
-    [InlineData("abc9#fgh", false)] // no capital letter
-    [InlineData("abC9efgh", false)] // no special character
+    [InlineData("abC9#fgh", true)]  
+    [InlineData("stU5/xyz", true)] 
+    [InlineData("abC9#fg", false)]  
+    [InlineData("abCd#fgh", false)] 
+    [InlineData("abc9#fgh", false)] 
+    [InlineData("abC9efgh", false)] 
     public void TestIsPasswordGoodEnough(string password, bool expected)
     {
         Assert.Equal(expected, Utils.IsPasswordGoodEnough(password));
-    }
-
-    [Theory]
-    [InlineData("abC9#fgh", true)]  // ok
-    [InlineData("stU5/xyz", true)]  // ok too
-    [InlineData("abC9#fg", false)]  // too short
-    [InlineData("abCd#fgh", false)] // no digit
-    [InlineData("abc9#fgh", false)] // no capital letter
-    [InlineData("abC9efgh", false)] // no special character
-    public void TestIsPasswordGoodEnoughRegexVersion(string password, bool expected)
-    {
-        Assert.Equal(expected, Utils.IsPasswordGoodEnoughRegexVersion(password));
     }
 
     [Theory]
@@ -53,20 +40,14 @@ public class UtilsTest(Xlog Console)
     [Fact]
     public void TestCreateMockUsers()
     {
-        // Read all mock users from the JSON file
         var read = File.ReadAllText(FilePath("json", "mock-users.json"));
         Arr mockUsers = JSON.Parse(read);
-        // Get all users from the database
         Arr usersInDb = SQLQuery("SELECT email FROM users");
         Arr emailsInDb = usersInDb.Map(user => user.email);
-        // Only keep the mock users not already in db
         Arr mockUsersNotInDb = mockUsers.Filter(
             mockUser => !emailsInDb.Contains(mockUser.email)
         );
-        // Get the result of running the method in our code
         var result = Utils.CreateMockUsers();
-        // Assert that the CreateMockUsers only return
-        // newly created users in the db
         Console.WriteLine($"The test expected that {mockUsersNotInDb.Length} users should be added.");
         Console.WriteLine($"And {result.Length} users were added.");
         Console.WriteLine("The test also asserts that the users added " +
